@@ -19,7 +19,7 @@ public abstract class BaseDevice : IDevice
     protected IDevice.State state = IDevice.State.off;
     public IDevice.State GetState() => state;
 
-    public void PowerOff()
+    public virtual void PowerOff()
     {
         state = IDevice.State.off;
         Console.WriteLine("... Device is off !");
@@ -31,8 +31,9 @@ public abstract class BaseDevice : IDevice
         Console.WriteLine("Device is on ...");  
     }
 
-    public int Counter { get; private set; } = 0;
+    public int Counter { get; protected set; } = 0;
 }
+
 
 public interface IPrinter : IDevice
 {
@@ -47,5 +48,5 @@ public interface IScanner : IDevice
 {
     // dokument jest skanowany, jeśli urządzenie włączone
     // w przeciwnym przypadku nic się dzieje
-    void Scan(out IDocument document, IDocument.FormatType formatType);
+    void Scan(out IDocument document, IDocument.FormatType? formatType = null);
 }
