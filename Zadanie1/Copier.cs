@@ -2,29 +2,29 @@
 
 public class Copier : BaseDevice, IPrinter, IScanner
 {
-    private int scanCounter = 0;
+    private int _scanCounter = 0;
     public int PrintCounter { get; private set; } = 0;
 
     public int ScanCounter
     {
-        get => scanCounter;
-        private set => scanCounter = value;
+        get => _scanCounter;
+        private set => _scanCounter = value;
 
     }
 
-    public new int Counter { get; set; }
+    public override int Counter { get; protected set; }
 
-    static DateTime thisDay = DateTime.Now;
-    string data = $"{thisDay.ToString("d")}";
-    string time = $"{thisDay.ToString("T")}";
+    public static DateTime thisDay = DateTime.Now;
+    public string data = $"{thisDay.ToString("d")}";
+    public string time = $"{thisDay.ToString("T")}";
 
     
-    public new void PowerOn()
+    public override void PowerOn()
     {
         var off = GetState();
-        off = IDevice.State.off;
+        off = IDevice.State.Off;
         
-        if (GetState() == IDevice.State.off)
+        if (GetState() == IDevice.State.Off)
         {
             base.PowerOn();
             Counter++;
@@ -33,7 +33,7 @@ public class Copier : BaseDevice, IPrinter, IScanner
 
     public override void PowerOff()
     {
-        if (GetState() == IDevice.State.on)
+        if (GetState() == IDevice.State.On)
         {
             base.PowerOff();
         }
@@ -41,7 +41,7 @@ public class Copier : BaseDevice, IPrinter, IScanner
 
     public void Print(in IDocument document)
     {
-        if (GetState() == IDevice.State.on)
+        if (GetState() == IDevice.State.On)
         {
             Console.WriteLine(
                 $"{data} {time} Print: {document.GetFileName().Substring(0, document.GetFileName().Length - 4)}.{document.GetFormatType()}");
@@ -53,24 +53,24 @@ public class Copier : BaseDevice, IPrinter, IScanner
     {
         document = null;
         
-        if (GetState() == IDevice.State.on)
+        if (GetState() == IDevice.State.On)
         {
             string fileName = "";
 
             if (formatType == IDocument.FormatType.PDF)
             {
-                fileName = $"PDFScan{ScanCounter}.pdf";
+                fileName = $"PDFScan{ScanCounter}.{formatType.ToString().ToLower()}";
                 document = new PDFDocument(fileName);
 
             }
             else if (formatType == IDocument.FormatType.JPG)
             {
-                fileName = $"ImageScan{ScanCounter}.jpg";
+                fileName = $"ImageScan{ScanCounter}.{formatType.ToString().ToLower()}";
                 document = new ImageDocument(fileName);
             }
             else if (formatType == IDocument.FormatType.TXT)
             {
-                fileName = $"TextScan{ScanCounter}.txt";
+                fileName = $"TextScan{ScanCounter}.{formatType.ToString().ToLower()}";
                 document = new TextDocument(fileName);
             }
 

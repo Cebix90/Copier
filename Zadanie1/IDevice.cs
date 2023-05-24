@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace Zadanie1;
+﻿namespace Zadanie1;
 
 public interface IDevice
 {
-    enum State {on, off};
+    enum State {On, Off};
 
     void PowerOn(); // uruchamia urządzenie, zmienia stan na `on`
     void PowerOff(); // wyłącza urządzenie, zmienia stan na `off
@@ -16,22 +14,22 @@ public interface IDevice
 
 public abstract class BaseDevice : IDevice
 {
-    protected IDevice.State state = IDevice.State.off;
+    protected IDevice.State state = IDevice.State.Off;
     public IDevice.State GetState() => state;
 
     public virtual void PowerOff()
     {
-        state = IDevice.State.off;
+        state = IDevice.State.Off;
         Console.WriteLine("... Device is off !");
     }
 
-    public void PowerOn()
+    public virtual void PowerOn()
     {
-        state = IDevice.State.on;
+        state = IDevice.State.On;
         Console.WriteLine("Device is on ...");  
     }
 
-    public int Counter { get; protected set; } = 0;
+    public virtual int Counter { get; protected set; } = 0;
 }
 
 
