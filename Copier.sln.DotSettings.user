@@ -1,8 +1,11 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=014f0630_002De942_002D487d_002D9c2d_002Dcdda3bb90a0c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Copier_Scan_DeviceOff" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Project Location="C:\Users\Mateusz\RiderProjects\Copier\Zadanie1UnitTests" Presentation="&amp;lt;Zadanie1UnitTests&amp;gt;" /&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=014f0630_002De942_002D487d_002D9c2d_002Dcdda3bb90a0c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Copier_Scan_DeviceOff" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;Project Location="C:\Users\Mateusz\RiderProjects\Copier\Zadanie1UnitTests" Presentation="&amp;lt;Zadanie1UnitTests&amp;gt;" /&gt;&#xD;
+    &lt;ProjectFile&gt;9B238CE4-E36A-43CE-B1A3-DF2ECD16A278/f:UnitTest1.cs&lt;/ProjectFile&gt;&#xD;
+  &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c1615692_002Ddc22_002D49fc_002Daa43_002D51e8e74ad237/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="UnitTestCopier" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c1615692_002Ddc22_002D49fc_002Daa43_002D51e8e74ad237/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="UnitTestCopier" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Or&gt;&#xD;
     &lt;TestAncestor&gt;&#xD;
       &lt;TestId&gt;MSTest::D8F24D2B-1DF7-4FBB-ABB5-0F2B59CDF732::net7.0::Zadanie1UnitTests.UnitTestCopier&lt;/TestId&gt;&#xD;

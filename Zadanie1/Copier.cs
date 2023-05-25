@@ -9,20 +9,18 @@ public class Copier : BaseDevice, IPrinter, IScanner
     {
         get => _scanCounter;
         private set => _scanCounter = value;
-
     }
 
     public override int Counter { get; protected set; }
 
-    public static DateTime thisDay = DateTime.Now;
-    public string data = $"{thisDay.ToString("d")}";
-    public string time = $"{thisDay.ToString("T")}";
+    private static DateTime thisDay = DateTime.Now;
+    protected string data = $"{thisDay:d}";
+    protected string time = $"{thisDay:T}";
 
     
     public override void PowerOn()
     {
-        var off = GetState();
-        off = IDevice.State.Off;
+        var off = IDevice.State.Off;
         
         if (GetState() == IDevice.State.Off)
         {
@@ -51,44 +49,43 @@ public class Copier : BaseDevice, IPrinter, IScanner
 
     public void Scan(out IDocument document, IDocument.FormatType? formatType = null)
     {
-        document = null;
-        
         if (GetState() == IDevice.State.On)
         {
+            ScanCounter++;
             string fileName = "";
+            IDocument.FormatType selectedFormatType = formatType ?? IDocument.FormatType.JPG;
 
-            if (formatType == IDocument.FormatType.PDF)
+            if (selectedFormatType == IDocument.FormatType.PDF)
             {
-                fileName = $"PDFScan{ScanCounter}.{formatType.ToString().ToLower()}";
+                fileName = $"PDFScan{ScanCounter}.{selectedFormatType.ToString().ToLower()}";
                 document = new PDFDocument(fileName);
-
             }
-            else if (formatType == IDocument.FormatType.JPG)
+            else if (selectedFormatType == IDocument.FormatType.TXT)
             {
-                fileName = $"ImageScan{ScanCounter}.{formatType.ToString().ToLower()}";
-                document = new ImageDocument(fileName);
-            }
-            else if (formatType == IDocument.FormatType.TXT)
-            {
-                fileName = $"TextScan{ScanCounter}.{formatType.ToString().ToLower()}";
+                fileName = $"TextScan{ScanCounter}.{selectedFormatType.ToString().ToLower()}";
                 document = new TextDocument(fileName);
+            }
+            else
+            {
+                fileName = $"ImageScan{ScanCounter}.{selectedFormatType.ToString().ToLower()}";
+                document = new ImageDocument(fileName);
             }
 
             Console.WriteLine($"{data} {time} Scan: {fileName}");
-            ScanCounter++;
+        }
+        else
+        {
+            document = null;
         }
     }
+
 
     public void ScanAndPrint()
     {
         IDocument document;
-        IDocument.FormatType formatType = IDocument.FormatType.JPG;
 
-        Scan(out document, formatType);
+        Scan(out document);
 
-        if (document != null)
-        {
-            Print(document);
-        }
+        Print(document);
     }
 }
