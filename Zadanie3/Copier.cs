@@ -1,37 +1,52 @@
 ﻿namespace Zadanie3;
 
+#region classCopier
 public class Copier : BaseDevice, IPrinter, IScanner
 {
     public int ScanCounter { get; private set; } = 0;
     public int PrintCounter { get; private set; } = 0;
 
-    private Printer printer = new Printer();
-    private Scanner scanner = new Scanner();
+    protected Printer printer = new Printer();
+    protected Scanner scanner = new Scanner();
 
     public override int Counter { get; protected set; }
 
     public override void PowerOn()
     {
-        var off = IDevice.State.Off;
+        var offPrinter = IPrinter.State.Off;
+        var offScanner = IScanner.State.Off;
         
-        if (GetState() == IDevice.State.Off)
+        if (printer.GetState() == IPrinter.State.Off && scanner.GetState() == IScanner.State.Off)
         {
-            base.PowerOn();
+            state = IDevice.State.On;
+            
+            Console.Write($"Device is on... (");
+            printer.PowerOn();
+            Console.Write(", ");
+            scanner.PowerOn();
+            Console.WriteLine(")");
+            
             Counter++;
         }
     }
 
     public override void PowerOff()
     {
-        if (GetState() == IDevice.State.On)
+        if (printer.GetState() == IPrinter.State.On && scanner.GetState() == IScanner.State.On)
         {
-            base.PowerOff();
+            state = IDevice.State.Off;
+            
+            Console.Write($"Device is off... (");
+            printer.PowerOff();
+            Console.Write(", ");
+            scanner.PowerOff();
+            Console.WriteLine(")");
         }
     }
     
     public void Print(in IDocument document)
     {
-        if (GetState() == IDevice.State.On)
+        if (printer.GetState() == IPrinter.State.On)
         {
             printer.Print(document);
             PrintCounter++;
@@ -40,7 +55,7 @@ public class Copier : BaseDevice, IPrinter, IScanner
 
     public void Scan(out IDocument document, IDocument.FormatType? formatType = null)
     {
-        if (GetState() == IScanner.State.On)
+        if (scanner.GetState() == IScanner.State.On)
         {
             scanner.Scan(out document, formatType);
             ScanCounter++;
@@ -60,29 +75,63 @@ public class Copier : BaseDevice, IPrinter, IScanner
         Print(document);
     }
 }
+#endregion
 
+#region classPrinter
 public class Printer : BaseDevice, IPrinter
 { 
+    public override void PowerOn()
+    {
+        if (GetState() == IPrinter.State.Off)
+        {
+            state = IPrinter.State.On;
+            Console.Write("Printer active");
+        }
+    }
+
+    public override void PowerOff()
+    {
+        if (GetState() == IPrinter.State.On)
+        {
+            state = IPrinter.State.Off;
+            Console.Write("Printer inactive");
+        }
+    }
     public void Print(in IDocument document)
     {
-        DateTime thisDay = DateTime.Now;
-        string data = $"{thisDay:d}";
-        string time = $"{thisDay:T}";
+        string dateTimeString = DateTimeHelper.GetCurrentDateTimeString();
         
         Console.WriteLine(
-        $"{data} {time} Print: {document.GetFileName().Substring(0, document.GetFileName().Length - 4)}.{document.GetFormatType()}");
+        $"{dateTimeString} Print: {document.GetFileName().Substring(0, document.GetFileName().Length - 4)}.{document.GetFormatType()}");
     }
 }
+#endregion
 
+#region classScanner
 public class Scanner : BaseDevice, IScanner
 {
+    public override void PowerOn()
+    {
+        if (GetState() == IScanner.State.Off)
+        {
+            state = IScanner.State.On;
+            Console.Write("Scanner active");
+        }
+    }
+
+    public override void PowerOff()
+    {
+        if (GetState() == IScanner.State.On)
+        {
+            state = IScanner.State.Off;
+            Console.Write("Scanner inactive");
+        }
+    }
     public int ScanCounter { get; private set; } = 0;
     
     public void Scan(out IDocument document, IDocument.FormatType? formatType = null)
     {
-        DateTime thisDay = DateTime.Now;
-        string data = $"{thisDay:d}";
-        string time = $"{thisDay:T}";
+        string dateTimeString = DateTimeHelper.GetCurrentDateTimeString();
         
         ScanCounter++;
         string fileName = "";
@@ -104,6 +153,20 @@ public class Scanner : BaseDevice, IScanner
             document = new ImageDocument(fileName);
         }
 
-        Console.WriteLine($"{data} {time} Scan: {fileName}");
+        Console.WriteLine($"{dateTimeString} Scan: {fileName}");
     }
 }
+#endregion
+
+#region DateTimeHelper
+public static class DateTimeHelper
+{
+    public static string GetCurrentDateTimeString()
+    {
+        DateTime thisDay = DateTime.Now;
+        string data = $"{thisDay:d}";
+        string time = $"{thisDay:T}";
+        return $"{data} {time}";
+    }
+}
+#endregion

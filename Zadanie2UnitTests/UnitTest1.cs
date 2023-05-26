@@ -7,6 +7,24 @@ namespace Zadanie2UnitTests;
 [TestClass]
 public class UnitTest1
 {
+    [TestMethod]
+    public void MultifunctionalDevice_GetState_StateOff()
+    {
+        var multifunctionalDevice = new MultifunctionalDevice();
+        multifunctionalDevice.PowerOff();
+
+        Assert.AreEqual(IDevice.State.Off, multifunctionalDevice.GetState()); 
+    }
+
+    [TestMethod]
+    public void MultifunctionalDevice_GetState_StateOn()
+    {
+        var multifunctionalDevice = new MultifunctionalDevice();
+        multifunctionalDevice.PowerOn();
+
+        Assert.AreEqual(IDevice.State.On, multifunctionalDevice.GetState());
+    }
+    
     // weryfikacja, czy po wywołaniu metody `SendFax` i włączonym urzadzeniu wielofunkcyjnym w napisie pojawia się słowo `Fax sent`
     // wymagane przekierowanie konsoli do strumienia StringWriter
     [TestMethod]
@@ -84,7 +102,7 @@ public class UnitTest1
     }
     
     [TestMethod]
-    public void Copier_ScanCounter()
+    public void MultifunctionalDevice_FaxCounter()
     {
         var multifunctionalDevice = new MultifunctionalDevice();
         multifunctionalDevice.PowerOn();
