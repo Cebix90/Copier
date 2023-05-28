@@ -102,7 +102,7 @@ public class Printer : BaseDevice, IPrinter
         string dateTimeString = DateTimeHelper.GetCurrentDateTimeString();
         
         Console.WriteLine(
-        $"{dateTimeString} Print: {document.GetFileName().Substring(0, document.GetFileName().Length - 4)}.{document.GetFormatType()}");
+        $"{dateTimeString} Print: {document.GetFileName()}");
     }
 }
 #endregion

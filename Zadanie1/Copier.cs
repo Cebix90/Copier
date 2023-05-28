@@ -42,7 +42,7 @@ public class Copier : BaseDevice, IPrinter, IScanner
         if (GetState() == IDevice.State.On)
         {
             Console.WriteLine(
-                $"{data} {time} Print: {document.GetFileName().Substring(0, document.GetFileName().Length - 4)}.{document.GetFormatType()}");
+                $"{data} {time} Print: {document.GetFileName()}");
             PrintCounter++;
         }
     }
