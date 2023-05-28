@@ -48,15 +48,6 @@ class Program
         Console.WriteLine("Copier stan: " + copier.GetState());
         Console.WriteLine("Printer stan: " + copier.GetPrinterState());
         Console.WriteLine("Scanner stan: " + copier.GetScannerState());
-
-        copier.ScanAndPrint();
-        copier.ScanAndPrint();
-        copier.ScanAndPrint();
-        copier.ScanAndPrint();
-
-        Console.WriteLine("Copier stan: " + copier.GetState());
-        Console.WriteLine("Printer stan: " + copier.GetPrinterState());
-        Console.WriteLine("Scanner stan: " + copier.GetScannerState());
         
         Console.WriteLine($"Counter for PowerOn: {copier.Counter}");
         Console.WriteLine($"Counter for PrintCounter: {copier.PrintCounter}");

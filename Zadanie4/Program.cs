@@ -44,15 +44,6 @@ class Program
         
         copier.StandbyOn();
         copier.StandbyOff();
-        
-        Console.WriteLine("Copier stan: " + copier.GetState());
-        Console.WriteLine("Printer stan: " + copier.GetPrinterState());
-        Console.WriteLine("Scanner stan: " + copier.GetScannerState());
-        
-        copier.ScanAndPrint();
-        copier.ScanAndPrint();
-        copier.ScanAndPrint();
-        copier.ScanAndPrint();
 
         Console.WriteLine("Copier stan: " + copier.GetState());
         Console.WriteLine("Printer stan: " + copier.GetPrinterState());

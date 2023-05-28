@@ -79,14 +79,19 @@ public class Copier
         if (GetState() == IDevice.State.On)
         {
             scanner.scannerState = IDevice.State.Standby;
-            if (PrintCounter % 3 == 0 && PrintCounter > 0)
-            {
-                Console.WriteLine("Printer in standby mode...");
-                printer.printerState = IDevice.State.Standby;
-            }
             
             printer.Print(document);
             PrintCounter++;
+            
+            if (PrintCounter % 3 == 0 && PrintCounter > 0)
+            {
+                printer.printerState = IDevice.State.Standby;
+                Console.WriteLine("Printer in standby mode for a moment...");
+            }
+            else
+            {
+               printer.printerState = IDevice.State.On;
+            }
         }
     }
 
@@ -95,17 +100,19 @@ public class Copier
         if (GetState() == IDevice.State.On)
         {
             printer.printerState = IDevice.State.Standby;
+            
+            scanner.Scan(out document, formatType);
+            ScanCounter++;
+            
             if (ScanCounter % 2 == 0 && ScanCounter > 0)
             {
-                Console.WriteLine("Scanner in standby mode...");
+                Console.WriteLine("Scanner in standby mode for a moment...");
                 scanner.scannerState = IDevice.State.Standby;
             }
             else
             {
                 scanner.scannerState = IDevice.State.On;
             }
-            scanner.Scan(out document, formatType);
-            ScanCounter++;
         }
         else
         {

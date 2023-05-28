@@ -76,14 +76,19 @@ public class Copier : IPrinter, IScanner
         if (state == IDevice.State.On)
         {
             scannerState = IDevice.State.Standby;
-            if (PrintCounter % 3 == 0 && PrintCounter > 0)
-            {
-                Console.WriteLine("Printer in standby mode...");
-                printerState = IDevice.State.Standby;
-            }
-            
+           
             Console.WriteLine($"{data} {time} Print: {document.GetFileName()}");
             PrintCounter++;
+            
+            if (PrintCounter % 3 == 0 && PrintCounter > 0)
+            {
+                printerState = IDevice.State.Standby;
+                Console.WriteLine("Printer in standby mode for a moment...");
+            }
+            else
+            {
+                printerState = IDevice.State.On;
+            }
         }
     }
     #endregion
@@ -94,15 +99,6 @@ public class Copier : IPrinter, IScanner
         if (state == IDevice.State.On)
         {
             printerState = IDevice.State.Standby;
-            if (ScanCounter % 2 == 0 && ScanCounter > 0)
-            {
-                scannerState = IDevice.State.Standby;
-                Console.WriteLine("Scanner in standby mode...");
-            }
-            else
-            {
-                scannerState = IDevice.State.On;
-            }
             
             ScanCounter++;
             string fileName = "";
@@ -125,6 +121,16 @@ public class Copier : IPrinter, IScanner
             }
 
             Console.WriteLine($"{data} {time} Scan: {fileName}");
+            
+            if (ScanCounter % 2 == 0 && ScanCounter > 0)
+            {
+                scannerState = IDevice.State.Standby;
+                Console.WriteLine("Scanner in standby mode for a moment...");
+            }
+            else
+            {
+                scannerState = IDevice.State.On;
+            }
         }
         else
         {
